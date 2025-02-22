@@ -5,7 +5,7 @@ let screenReaderActive = false;
 function toggleScreenReader() {
     screenReaderActive = !screenReaderActive;
     const screenReaderText = document.getElementById('screen-reader-text');
-    
+
     if (screenReaderActive) {
         document.body.addEventListener('mouseover', handleScreenReader);
         alert('Screen reader activated. Hover over elements to hear them.');
@@ -80,10 +80,33 @@ function toggleLanguage() {
             subtitle: 'एक व्यापक देखभाल समाधान जो बुजुर्गों और उनके प्रियजनों को मन की शांति प्रदान करता है।'
         }
     };
-    
+
     document.querySelector('.hero h1').textContent = translations[currentLanguage].title;
     document.querySelector('.hero p').textContent = translations[currentLanguage].subtitle;
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const sosButton = document.querySelector(".sos-button");
 
+    if (sosButton) {
+        sosButton.addEventListener("click", function() {
+            console.log("SOS Button Clicked!");
+            sendSOS(); // Call sendSOS function
+        });
+    } else {
+        console.error("SOS button not found!");
+    }
+});
+
+// ✅ Move this function outside so it can be used globally
+function sendSOS() {
+    fetch("http://localhost:5000/send-sos", { // 🔄 Change port 6000 to 3000 (safe)
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ to:"+918017466069", message: 'SOS ALERT!!!' })
+    })
+    .then(response => response.json())
+    .then(data => console.log("Response from server:", data))
+    .catch(error => console.error("Error sending SOS:", error));
+}
 
