@@ -1,13 +1,6 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-require("dotenv").config();
-
+import express from "express";
 const router = express.Router();
-
-// Register
-router.post("/register", async (req, res) => {
+router.post("/signup", async(req,res)=>{
     const { username, email, password } = req.body;
     try {
         const salt = await bcrypt.genSalt(10);
@@ -20,9 +13,7 @@ router.post("/register", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
-// Login
-router.post("/login", async (req, res) => {
+router.post("/login", async(req,res)=>{
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -38,4 +29,4 @@ router.post("/login", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
