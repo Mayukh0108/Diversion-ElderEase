@@ -3,28 +3,29 @@ import cors from "cors";
 import "dotenv/config";
 import connectDB from "./mongodb.js";
 import router from "./userRoutes.js";
-import twilio from "twilio";
+import contactRouter from "./contactRoutes.js";
+// import twilio from "twilio";
 
-// Initialize Twilio client
-const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+// // Initialize Twilio client
+// const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 
-// Twilio message function
-async function sendMessage() {
-  try {
-    const message = await client.messages.create({  // Use "client" instead of "twilio"
-      body: "Hello from Twilio",
-      from: "+15732675589",
-      to: process.env.PHONE_NUMBER
-    });
+// // Twilio message function
+// async function sendMessage() {
+//   try {
+//     const message = await client.messages.create({  // Use "client" instead of "twilio"
+//       body: "Hello from Twilio",
+//       from: "+15732675589",
+//       to: process.env.PHONE_NUMBER
+//     });
 
-    console.log("📩 Message Sent! SID:", message.sid);
-  } catch (error) {
-    console.error("❌ Error sending message:", error.message);
-  }
-}
+//     console.log("📩 Message Sent! SID:", message.sid);
+//   } catch (error) {
+//     console.error("❌ Error sending message:", error.message);
+//   }
+// }
 
-// Call the function
-sendMessage();
+// // Call the function
+// sendMessage();
 
 const app = express();
 
@@ -38,6 +39,7 @@ await connectDB();
 
 // Routes
 app.use("/api/user", router);
+app.use("/api/contact", contactRouter);
 
 
 
