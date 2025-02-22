@@ -3,8 +3,6 @@ import cors from "cors";
 import "dotenv/config";
 import connectDB from "./mongodb.js";
 import router from "./userRoutes.js";
-import bcrypt from "bcrypt";
-
 const app = express();
 
 // Connect to MongoDB
