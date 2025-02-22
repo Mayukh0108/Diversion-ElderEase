@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FF99C8, #FCF6BD, #D0F4DE, #A9DEF9, #E4C1F9, #8AF7FA);
+            background-size: 400% 400%;
+            animation: moveGradient 8s infinite linear;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .form-container {
+            padding: 2rem;
+            width: 400px;
+            flex-shrink: 0;
+            box-shadow: 20px 20px 20px rgba(0, 255, 255, 0.8);
+            border: 2px solid rgba(0, 255, 255, 0.6);
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .category-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .category-selector label {
+            font-size: 0.9rem;
+            color: #444;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .category-selector input {
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #007bff, #6610f2);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #0056b3, #510ba6);
+        }
+
+        p {
+            margin-top: 1rem;
+            text-align: center;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        p a {
+            color: #007bff;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        p a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .notification {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        @keyframes moveGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-container {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @media (max-width: 450px) {
+            .container {
+                width: 100%;
+            }
+
+            .form-container {
+                width: 100%;
+            }
+        }
+
+        /* Elder Person specific styles */
+        .elder-form .form-group input {
+            border-color: #E4C1F9;
+            background: #f8f5ff;
+        }
+
+        .elder-form button {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #007bff, #6610f2);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .elder-form button:hover {
+            background: linear-gradient(135deg, #0056b3, #510ba6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slider">
+            <!-- Sign Up Section -->
+            <div class="form-container sign-up">
+                <h2>Sign Up</h2>
+                <form id="signup-form">
+                    <div class="category-selector">
+                        <label>
+                            <input type="radio" name="category" value="family-member" checked> Family Member
+                        </label>
+                        <label>
+                            <input type="radio" name="category" value="elder-person"> Elder Person
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="signup-name" placeholder="Name" required>
+                    </div>
+
+                    <!-- Dynamic sections based on category -->
+                    <div id="family-member-fields">
+                        <div class="form-group">
+                            <p>Do you have an Elder ID?</p>
+                            <div class="category-selector">
+                                <label>
+                                    <input type="radio" name="has-elder-id" value="yes"> Yes
+                                </label>
+                                <label>
+                                    <input type="radio" name="has-elder-id" value="no"> No
+                                </label>
+                            </div>
+                            <div class="form-group hidden" id="elder-id-input">
+                                <input type="text" id="signup-elder-id" placeholder="Enter Elder ID">
+                            </div>
+                            <p class="notification hidden" id="elder-id-notification">You must have an Elder ID.</p>
+                        </div>
+                    </div>
+
+                    <div id="elder-person-fields" class="hidden">
+                        <div class="form-group">
+                            <input type="text" id="elder-id" placeholder="Elder ID" required readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" id="signup-email" placeholder="Email/Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="signup-password" placeholder="Password" required>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                </form>
+                <p>Already have an account? <a href="#" id="login-link">Login</a></p>
+            </div>
+
+            <!-- Login Section -->
+            <div class="form-container login hidden">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="category-selector">
+                        <label>
+                            <input type="radio" name="category" value="family-member" checked> Family Member
+                        </label>
+                        <label>
+                            <input type="radio" name="category" value="elder-person"> Elder Person
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="login-email" placeholder="Email/Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="login-password" placeholder="Password/OTP" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Don't have an account? <a href="#" id="signup-link">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between forms
+        const signupLink = document.getElementById('signup-link');
+        const loginLink = document.getElementById('login-link');
+        const signupForm = document.querySelector('.sign-up');
+        const loginForm = document.querySelector('.login');
+
+        signupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        });
+
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+        });
+
+        // Toggle Elder ID fields
+        document.querySelectorAll('input[name="category"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                const isElder = radio.value === 'elder-person';
+                document.getElementById('family-member-fields').classList.toggle('hidden', isElder);
+                document.getElementById('elder-person-fields').classList.toggle('hidden', !isElder);
+                document.getElementById('signup-form').classList.toggle('elder-form', isElder);
+
+                // Clear Elder ID field when switching categories
+                if (!isElder) {
+                    document.getElementById('elder-id').value = '';
+                }
+            });
+        });
+
+        // Elder ID Section Logic
+        const hasElderIdRadios = document.querySelectorAll('input[name="has-elder-id"]');
+        const elderIdInput = document.getElementById('elder-id-input');
+        const elderIdNotification = document.getElementById('elder-id-notification');
+
+        hasElderIdRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'yes') {
+                    elderIdInput.classList.remove('hidden');
+                    elderIdNotification.classList.add('hidden');
+                } else {
+                    elderIdInput.classList.add('hidden');
+                    elderIdNotification.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Generate Random Elder ID
+        const elderIdField = document.getElementById('elder-id');
+        elderIdField.addEventListener('click', () => {
+            if (document.querySelector('input[name="category"]:checked').value === 'elder-person') {
+                const randomId = generateRandomId();
+                elderIdField.value = randomId;
+            }
+        });
+
+        function generateRandomId() {
+            const prefix = 'ELDER-';
+            const randomNumber = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+            return prefix + randomNumber;
+        }
+
+        // Form Submission
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const hasElderId = document.querySelector('input[name="has-elder-id"]:checked').value;
+            if (hasElderId === 'no' && document.querySelector('input[name="category"]:checked').value === 'family-member') {
+                alert('You must have an Elder ID to sign up as a Family Member.');
+            } else {
+                alert('Sign Up Successful!');
+            }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Login Successful!');
+        });
+    </script>
+</body>
+</html>
