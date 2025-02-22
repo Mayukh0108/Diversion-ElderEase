@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elderly Care Chat</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+      }
+      .sidebar {
+        width: 25%;
+        background: #c1b0ec;
+        padding: 15px;
+        overflow-y: auto;
+        border-right: 2px solid #ddd;
+      }
+      .sidebar .user {
+        text-align: center;
+        padding: 10px;
+        background: rgb(255, 227, 227);
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .chat-container {
+        flex: 1;
+        background-color: antiquewhite;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: #fff;
+      }
+      .input-area {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        padding: 10px;
+        border-top: 2px solid #ddd;
+      }
+      .input-area input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 10px;
+      }
+      .input-area button {
+        padding: 10px;
+        padding-inline: 20px;
+        border-radius: 10px;
+        background: blue;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .call-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+      }
+      .video-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px;
+      }
+      video {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        background: black;
+      }
+      .call-controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+      }
+      .call-controls button {
+        padding: 10px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        background: #f0f0f0;
+      }
+      .call-controls button.active {
+        background: #4caf50;
+        color: white;
+      }
+      .call-controls {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          border-right: none;
+          border-bottom: 2px solid #ddd;
+        }
+        .user {
+          text-align: center;
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h3>Users</h3>
+        <div class="user" onclick="selectUser('Arjun')">Arjun</div>
+        <div class="user" onclick="selectUser('Smriti')">Smriti</div>
+      </div>
+      <div class="chat-container">
+        <div class="messages" id="messages"></div>
+        <div class="input-area">
+          <input type="text" id="chatInput" placeholder="Type a message..." />
+          <button onclick="sendMessage()">Send</button>
+        </div>
+        <div class="call-buttons">
+          <button onclick="startAudioCall()">Audio Call</button>
+          <button onclick="startVideoCall()">Video Call</button>
+        </div>
+        <div class="video-container">
+          <video id="localVideo" autoplay></video>
+          <video id="remoteVideo" autoplay></video>
+        </div>
+        <div class="call-controls" id="callControls">
+          <button id="muteAudio" onclick="toggleMuteAudio()">Mute</button>
+          <button id="muteVideo" onclick="toggleMuteVideo()">Video Off</button>
+          <button id="endCall" onclick="endCall()">End Call</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      let selectedUser = "";
+      let localStream;
+      let remoteStream;
+      let isAudioMuted = false;
+      let isVideoMuted = false;
+
+      function selectUser(user) {
+        selectedUser = user;
+        document.getElementById(
+          "messages"
+        ).innerHTML = `<p>Chat with ${user}</p>`;
+      }
+
+      function sendMessage() {
+        let input = document.getElementById("chatInput");
+        if (input.value.trim() !== "") {
+          let message = `<p><strong>You:</strong> ${input.value}</p>`;
+          document.getElementById("messages").innerHTML += message;
+          input.value = "";
+        }
+      }
+
+      function startAudioCall() {
+        alert("Starting an audio call with " + selectedUser);
+        navigator.mediaDevices
+          .getUserMedia({ audio: true })
+          .then((stream) => {
+            localStream = stream;
+            document.getElementById("localVideo").srcObject = stream;
+            document.getElementById("callControls").style.display = "flex";
+          })
+          .catch((error) => alert("Error accessing microphone"));
+      }
+
+      function startVideoCall() {
+        alert("Starting a video call with " + selectedUser);
+        navigator.mediaDevices
+          .getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+            localStream = stream;
+            document.getElementById("localVideo").srcObject = stream;
+            document.getElementById("callControls").style.display = "flex";
+          })
+          .catch((error) => alert("Error accessing camera/microphone"));
+      }
+
+      function toggleMuteAudio() {
+        isAudioMuted = !isAudioMuted;
+        localStream
+          .getAudioTracks()
+          .forEach((track) => (track.enabled = !isAudioMuted));
+        document.getElementById("muteAudio").innerText = isAudioMuted
+          ? "Unmute"
+          : "Mute";
+      }
+
+      function toggleMuteVideo() {
+        isVideoMuted = !isVideoMuted;
+        localStream
+          .getVideoTracks()
+          .forEach((track) => (track.enabled = !isVideoMuted));
+        document.getElementById("muteVideo").innerText = isVideoMuted
+          ? "Video On"
+          : "Video Off";
+      }
+
+      function endCall() {
+        if (localStream) {
+          localStream.getTracks().forEach((track) => track.stop());
+        }
+        document.getElementById("localVideo").srcObject = null;
+        document.getElementById("remoteVideo").srcObject = null;
+        document.getElementById("callControls").style.display = "none";
+        alert("Call ended with " + selectedUser);
+      }
+    </script>
+  </body>
+</html>
