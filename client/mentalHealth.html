@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Health Activities</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-top: 20px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      animation: slideIn 1s ease-in-out;
+    }
+
+    .activity-card {
+      background-color: #e9f5ff;
+      padding: 25px;
+      margin: 20px 0;
+      border-radius: 12px;
+      border: 1px solid #bde0fe;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .activity-card h3 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #2c3e50;
+    }
+
+    .activity-card p {
+      margin: 10px 0;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .activity-button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 10px 5px;
+    }
+
+    .activity-button:hover {
+      background-color: #2980b9;
+      transform: scale(1.05);
+    }
+
+    .voice-input {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .voice-input button {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .voice-input button:hover {
+      background-color: #27ae60;
+      transform: scale(1.05);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      animation: slideIn 0.3s ease-in-out;
+    }
+
+    .modal-content h3 {
+      margin: 0 0 20px;
+      font-size: 1.8rem;
+      color: #2c3e50;
+    }
+
+    .modal-content input {
+      width: 80%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .modal-content button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-content button:hover {
+      background-color: #2980b9;
+    }
+
+    .startchatbtn{
+      color:white;
+      text-decoration:none;
+    }
+
+    .modal-content .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .modal-content .close:hover {
+      color: #000;
+    }
+
+    /* Accessibility Features */
+    .high-contrast {
+      background-color: #000;
+      color: #fff;
+    }
+
+    .high-contrast .container {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .high-contrast .activity-card {
+      background-color: #444;
+      border-color: #555;
+    }
+
+    .high-contrast h1,
+    .high-contrast h3,
+    .high-contrast p {
+      color: #fff;
+    }
+
+    .high-contrast .activity-button {
+      background-color: #44aaff;
+    }
+
+    .high-contrast .voice-input button {
+      background-color: #55cc55;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .activity-card {
+        padding: 20px;
+      }
+
+      .activity-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+
+      .voice-input button {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+    }
+
+    #celebration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 223, 88, 0.9);
+      color: #ff00ff;
+      font-size: 5rem;
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: pop 1s ease-in-out;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .blink-red {
+      animation: blink 0.5s ease-in-out;
+    }
+
+    @keyframes blink {
+      0% {
+        background-color: red;
+      }
+
+      100% {
+        background-color: white;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Mental Health Activities</h1>
+  <div class="container">
+    <!-- Fun Activities Section -->
+    <div class="activity-card">
+      <h3>Fun Activities</h3>
+      <p>Engage in fun activities to keep your mind active and happy.</p>
+      <button class="activity-button" onclick="startFunActivity()">Start Fun Activity</button>
+    </div>
+
+    <!-- Chat with Someone Section -->
+    <div class="activity-card">
+      <h3>Chat with Someone</h3>
+      <p>Talk to a random person and make new friends.</p>
+      <button class="activity-button" onclick="startChat()"><a href="social.html" class="startchatbtn">Start Chat</a></button>
+    </div>
+
+    <!-- Games Section -->
+    <div class="activity-card">
+      <h3>Play Games</h3>
+      <p>Enjoy simple games to pass the time and sharpen your mind.</p>
+      <button class="activity-button" onclick="startGame()">Play Game</button>
+    </div>
+
+    <!-- Riddles and Quizzes Section -->
+    <div class="activity-card">
+      <h3>Riddles & Quizzes</h3>
+      <p>Solve riddles and quizzes to challenge your brain.</p>
+      <button class="activity-button" onclick="startRiddle()">Start Riddle</button>
+    </div>
+
+    <!-- Voice Input Section -->
+    <div class="voice-input">
+      <button onclick="startVoiceInput()">🎤 Speak to Choose Activity</button>
+    </div>
+  </div>
+
+  <!-- Riddle Modal -->
+  <div id="riddleModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="riddleQuestion"></h3>
+      <input type="text" id="userAnswer" placeholder="Your answer..." />
+      <button onclick="checkAnswer()">Submit</button>
+      <p id="resultMessage"></p>
+    </div>
+  </div>
+
+  <script>
+    // Fun Activities
+    function startFunActivity() {
+      alert("Starting a fun activity! Enjoy your time.");
+      // Redirect or display a fun activity
+    }
+
+    // Chat with Someone
+    function startChat() {
+      alert("Connecting you to a random person...");
+      // Integrate with a chat API
+    }
+
+    // Play Games
+    function startGame() {
+      alert("Starting a game! Have fun.");
+      // Redirect or display a game
+    }
+
+    // Riddles and Quizzes
+    const riddles = [
+      { question: "What has keys but can't open locks?", answer: "piano" },
+      { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m" },
+      { question: "What has to be broken before you can use it?", answer: "egg" },
+      { question: "The more you take, the more you leave behind. What am I?", answer: "footsteps" },
+      { question: "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?", answer: "echo" },
+      { question: "I have cities but no houses, forests but no trees, and rivers but no water. What am I?", answer: "map" },
+      { question: "I fly without wings. I cry without eyes. Wherever I go, darkness follows me. What am I?", answer: "cloud" },
+      { questiom: "The more you remove from me, the bigger I get. What am I?", answer: "hole" },
+      { question: "I can be cracked, made, told, and played. What am I?", answer: "joke" },
+      { question: "The more of me you share, the less you have. What am I?", answer: "secret" },
+      { question: "I have hands but no arms, a face but no eyes. What am I?", answer: "clock" },
+      { question: "You see me once in June, twice in November, but not at all in May. What am I?", answer: "letter E" },
+      { question: "I go up but never come down. What am I?", answer: "age" }
+    ];
+
+    let currentRiddle;
+
+    function startRiddle() {
+      currentRiddle = riddles[Math.floor(Math.random() * riddles.length)];
+      document.getElementById('riddleQuestion').textContent = currentRiddle.question;
+      document.getElementById('userAnswer').value = '';
+      document.getElementById('resultMessage').textContent = '';
+      document.getElementById('riddleModal').style.display = 'flex';
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.getElementById('userAnswer').value.trim().toLowerCase();
+      if (userAnswer === currentRiddle.answer) {
+        document.getElementById('resultMessage').textContent = "Correct! 🎉";
+      } else {
+        document.getElementById('resultMessage').textContent = `Incorrect. The answer is: ${currentRiddle.answer}`;
+      }
+    }
+
+
+    
+
+    function startRiddle() {
+      currentRiddleIndex = 0;
+      displayRiddle();
+      document.getElementById("riddleModal").style.display = "flex";
+    }
+
+    function displayRiddle() {
+      if (currentRiddleIndex < riddles.length) {
+        document.getElementById("riddleQuestion").textContent = riddles[currentRiddleIndex].question;
+        document.getElementById("userAnswer").value = "";
+        document.getElementById("resultMessage").textContent = "";
+      } else {
+        document.getElementById("riddleQuestion").textContent = "You've completed all riddles!";
+        document.getElementById("userAnswer").style.display = "none";
+        document.querySelector(".modal-content button").style.display = "none";
+      }
+    }
+
+    function checkAnswer() {
+      let userAnswer = document.getElementById("userAnswer").value.toLowerCase().trim();
+      let correctAnswer = riddles[currentRiddleIndex].answer.toLowerCase();
+
+      if (userAnswer === correctAnswer) {
+        document.getElementById("resultMessage").textContent = "Correct! 🎉 Moving to the next riddle...";
+        setTimeout(() => {
+          currentRiddleIndex++;
+          displayRiddle();
+        }, 1500); // Delay to show feedback before moving to the next riddle
+      } else {
+        document.getElementById("resultMessage").textContent = "Incorrect! Try again.";
+      }
+    }
+
+
+    let currentRiddleIndex = 0;
+
+    function startRiddle() {
+      currentRiddleIndex = 0;
+      displayRiddle();
+      document.getElementById("riddleModal").style.display = "flex";
+    }
+
+    function displayRiddle() {
+      if (currentRiddleIndex < riddles.length) {
+        document.getElementById("riddleQuestion").textContent = riddles[currentRiddleIndex].question;
+        document.getElementById("userAnswer").value = "";
+        document.getElementById("resultMessage").textContent = "";
+      } else {
+        document.getElementById("riddleQuestion").textContent = "You've completed all riddles!";
+        document.getElementById("userAnswer").style.display = "none";
+        document.querySelector(".modal-content button").style.display = "none";
+      }
+    }
+
+    function checkAnswer() {
+      let userAnswer = document.getElementById("userAnswer").value.toLowerCase().trim();
+      let correctAnswer = riddles[currentRiddleIndex].answer.toLowerCase();
+
+      if (userAnswer === correctAnswer) {
+        celebrate();
+        setTimeout(() => {
+          currentRiddleIndex++;
+          displayRiddle();
+        }, 3000); // Delay before moving to the next riddle
+      } else {
+        blinkRed();
+      }
+    }
+
+    function celebrate() {
+      let celebrationDiv = document.createElement("div");
+      celebrationDiv.id = "celebration";
+      celebrationDiv.innerHTML = "<h1>🎉 YAYY! 🎉</h1>";
+      document.body.appendChild(celebrationDiv);
+
+      setTimeout(() => {
+        celebrationDiv.remove();
+      }, 2000);
+    }
+
+
+    function blinkRed() {
+      document.body.classList.add("blink-red");
+      setTimeout(() => {
+        document.body.classList.remove("blink-red");
+      }, 500);
+    }
+
+    function closeModal() {
+      document.getElementById("riddleModal").style.display = "none";
+    }
+
+
+    function closeModal() {
+      document.getElementById("riddleModal").style.display = "none";
+    }
+
+
+    function closeModal() {
+      document.getElementById('riddleModal').style.display = 'none';
+    }
+
+    // Voice Input Functionality
+    function startVoiceInput() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert("Your browser does not support voice input. Please use Chrome or another supported browser.");
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.start();
+
+      recognition.onresult = (event) => {
+        const spokenText = event.results[0][0].transcript.toLowerCase();
+        if (spokenText.includes("fun")) {
+          startFunActivity();
+        } else if (spokenText.includes("chat")) {
+          startChat();
+        } else if (spokenText.includes("game")) {
+          startGame();
+        } else if (spokenText.includes("riddle")) {
+          startRiddle();
+        } else {
+          alert("Sorry, I didn't understand that. Please try again.");
+        }
+      };
+
+      recognition.onerror = (event) => {
+        alert("Error occurred in voice recognition. Please try again.");
+      };
+    }
+
+    // Toggle High Contrast Mode
+    function toggleContrast() {
+      document.body.classList.toggle('high-contrast');
+    }
+  </script>
+</body>
+
+</html>
