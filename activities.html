@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities for Seniors</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f4f4f4, #e0f7fa);
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .activity {
+            background: #ffffff;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .activity:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .activity h3 {
+            color: #4CAF50;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .details {
+            display: none;
+            font-size: 1rem;
+            color: #555;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .activity h3 {
+                font-size: 1.2rem;
+            }
+
+            .details {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Engaging Activities for Seniors</h1>
+        
+        <!-- Gardening -->
+        <div class="activity" onclick="toggleDetails('activity1')">
+            <h3>Gardening 🌱</h3>
+            <p class="details" id="activity1">Planting flowers and vegetables keeps you active and connected to nature. It’s a great way to enjoy the outdoors and improve mental well-being.</p>
+        </div>
+
+        <!-- Painting & Crafts -->
+        <div class="activity" onclick="toggleDetails('activity2')">
+            <h3>Painting & Crafts 🎨</h3>
+            <p class="details" id="activity2">Express creativity through painting, knitting, or pottery. These activities are relaxing and help improve fine motor skills.</p>
+        </div>
+
+        <!-- Music & Dance -->
+        <div class="activity" onclick="toggleDetails('activity3')">
+            <h3>Music & Dance 🎶</h3>
+            <p class="details" id="activity3">Listening to music or gentle dancing improves mood and memory. It’s a fun way to stay active and socialize.</p>
+        </div>
+
+        <!-- Book Club -->
+        <div class="activity" onclick="toggleDetails('activity4')">
+            <h3>Book Club 📚</h3>
+            <p class="details" id="activity4">Reading and discussing books with friends sharpens the mind and fosters meaningful conversations.</p>
+        </div>
+
+        <!-- Board Games & Puzzles -->
+        <div class="activity" onclick="toggleDetails('activity5')">
+            <h3>Board Games & Puzzles 🧩</h3>
+            <p class="details" id="activity5">Playing chess, sudoku, or crossword puzzles keeps the brain active and improves problem-solving skills.</p>
+        </div>
+
+        <!-- Light Exercise & Yoga -->
+        <div class="activity" onclick="toggleDetails('activity6')">
+            <h3>Light Exercise & Yoga 🧘‍♂️</h3>
+            <p class="details" id="activity6">Gentle exercises improve mobility, balance, and overall health. Yoga is especially beneficial for relaxation and flexibility.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetails(id) {
+            var details = document.getElementById(id);
+            if (details.style.display === "none" || details.style.display === "") {
+                details.style.display = "block";
+            } else {
+                details.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
