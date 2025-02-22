@@ -1,357 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accessibility & Memory Page</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            transition: background 0.5s ease, color 0.5s ease;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 90%;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin: 20px;
-            transition: background 0.5s ease, color 0.5s ease;
-        }
-
-        h1, h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            transition: color 0.5s ease;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 2rem;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 10px;
-        }
-
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #555;
-            transition: color 0.5s ease;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 12px 20px;
-            margin: 10px 5px;
-            border: none;
-            cursor: pointer;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        #increaseFont {
-            background-color: #007bff;
-            color: white;
-        }
-
-        #decreaseFont {
-            background-color: #28a745;
-            color: white;
-        }
-
-        #contrast {
-            background-color: #ffc107;
-            color: #333;
-        }
-
-        #reset {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .addMemory {
-            background-color: #17a2b8;
-            color: white;
-        }
-
-        /* Memory Section */
-        #memory-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #ccc;
-        }
-
-        .memory-input {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease, background 0.5s ease, color 0.5s ease;
-        }
-
-        .memory-input:focus {
-            border-color: #17a2b8;
-            outline: none;
-        }
-
-        .memory-list {
-            margin-top: 20px;
-            list-style: none;
-            padding: 0;
-        }
-
-        .memory-item {
-            background: #f9f9f9;
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: fadeIn 0.5s ease;
-            transition: background 0.5s ease, color 0.5s ease;
-        }
-
-        .memory-item button {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.3s ease;
-        }
-
-        .memory-item button:hover {
-            background: #c82333;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* High Contrast Mode */
-        .high-contrast {
-            background: black !important;
-            color: white !important;
-        }
-
-        .high-contrast .container {
-            background: #333;
-            color: white;
-        }
-
-        .high-contrast h1, .high-contrast h2 {
-            color: #4CAF50;
-        }
-
-        .high-contrast .memory-item {
-            background: #444;
-            border-color: #555;
-            color: white;
-        }
-
-        .high-contrast .memory-input {
-            background: #555;
-            color: white;
-            border-color: #777;
-        }
-
-        .high-contrast .memory-input:focus {
-            border-color: #17a2b8;
-        }
-
-        /* Dark Mode */
-        .dark-mode {
-            background: #1a1a1a;
-            color: #f5f5f5;
-        }
-
-        .dark-mode .container {
-            background: #2c3e50;
-            color: #f5f5f5;
-        }
-
-        .dark-mode h1, .dark-mode h2 {
-            color: #4CAF50;
-        }
-
-        .dark-mode .memory-item {
-            background: #333;
-            border-color: #444;
-            color: #f5f5f5;
-        }
-
-        .dark-mode .memory-input {
-            background: #444;
-            color: #f5f5f5;
-            border-color: #555;
-        }
-
-        .dark-mode .memory-input:focus {
-            border-color: #17a2b8;
-        }
-
-        /* Theme Switcher */
-        .theme-switcher {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .theme-btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .theme-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        #lightTheme {
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        #darkTheme {
-            background-color: #2c3e50;
-            color: #f5f5f5;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elder Ease Accessibility</title>
+  <link rel="stylesheet" href="accessibility.css">
 </head>
 <body>
-    <!-- Theme Switcher -->
-    <div class="theme-switcher">
-        <button id="lightTheme" class="theme-btn">Light Theme</button>
-        <button id="darkTheme" class="theme-btn">Dark Theme</button>
+  <header>
+    <h1>Elder Ease Accessibility</h1>
+    <div class="controls">
+      <button id="theme-toggle">Toggle Theme</button>
+      <select id="font-size">
+        <option value="16px">Normal Font</option>
+        <option value="20px">Large Font</option>
+        <option value="24px">Extra Large Font</option>
+      </select>
+      <button id="night-vision-toggle">Night Vision</button>
+      <button id="start-recording">Start Recording</button>
     </div>
+  </header>
 
-    <div class="container">
-        <!-- Accessibility Features -->
-        <h1>Accessibility Features</h1>
-        <p id="content">
-            This page offers accessibility enhancements for a better user experience. Use the buttons below to adjust font size, enable high contrast mode, or reset the page.
-        </p>
-        <div>
-            <button id="increaseFont" class="btn">Increase Font Size</button>
-            <button id="decreaseFont" class="btn">Decrease Font Size</button>
-            <button id="contrast" class="btn">High Contrast Mode</button>
-            <button id="reset" class="btn">Reset</button>
-        </div>
+  <main>
+    <section class="camera-section">
+      <h2>Live CCTV Feed</h2>
+      <div class="camera-feed">
+        <video id="live-camera" autoplay></video>
+        <canvas id="motion-canvas"></canvas>
+        <canvas id="snapshot-canvas"></canvas>
+        <div id="face-box" class="face-box"></div>
+      </div>
+      <div class="camera-controls">
+        <button id="capture-snapshot">Capture Snapshot</button>
+        <button id="detect-motion">Detect Motion</button>
+        <button id="detect-face">Detect Face</button>
+      </div>
+      <div class="snapshot-gallery" id="snapshot-gallery"></div>
+    </section>
 
-        <!-- Memory Journal -->
-        <div id="memory-section">
-            <h2>Memory Journal</h2>
-            <input
-                type="text"
-                id="memoryInput"
-                class="memory-input"
-                placeholder="Write a memory..."
-            />
-            <button type="button" id="addMemory" class="btn addMemory">Add Memory</button>
-            <ul id="memoryList" class="memory-list"></ul>
-        </div>
-    </div>
+    <section class="notifications">
+      <h2>Notifications</h2>
+      <div id="notification-area"></div>
+    </section>
+  </main>
 
-    <script>
-        // Font Size Adjustment
-        let content = document.getElementById("content");
-        let body = document.body;
-        let fontSize = 16;
+  
 
-        document.getElementById("increaseFont").addEventListener("click", function () {
-            fontSize += 2;
-            content.style.fontSize = fontSize + "px";
-        });
-
-        document.getElementById("decreaseFont").addEventListener("click", function () {
-            if (fontSize > 10) fontSize -= 2;
-            content.style.fontSize = fontSize + "px";
-        });
-
-        // High Contrast Mode
-        document.getElementById("contrast").addEventListener("click", function () {
-            body.classList.toggle("high-contrast");
-        });
-
-        // Reset Page
-        document.getElementById("reset").addEventListener("click", function () {
-            body.classList.remove("high-contrast", "dark-mode");
-            content.style.fontSize = "16px";
-        });
-
-        // Memory Journal
-        document.getElementById("addMemory").addEventListener("click", function () {
-            let memoryInput = document.getElementById("memoryInput");
-            let memoryText = memoryInput.value.trim();
-            if (memoryText !== "") {
-                let memoryList = document.getElementById("memoryList");
-                let li = document.createElement("li");
-                li.className = "memory-item";
-                li.innerHTML = `
-                    ${memoryText}
-                    <button onclick="removeMemory(this)">Delete</button>
-                `;
-                memoryList.appendChild(li);
-                memoryInput.value = "";
-            }
-        });
-
-        // Remove Memory
-        function removeMemory(button) {
-            let li = button.parentElement;
-            li.remove();
-        }
-
-        // Theme Switcher
-        document.getElementById("lightTheme").addEventListener("click", function () {
-            body.classList.remove("dark-mode");
-        });
-
-        document.getElementById("darkTheme").addEventListener("click", function () {
-            body.classList.add("dark-mode");
-        });
-    </script>
+  <script src="accessibility.js"></script>
 </body>
 </html>
