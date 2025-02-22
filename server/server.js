@@ -32,9 +32,9 @@ const app = express();
 await connectDB();
 
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+    // Middleware
+    app.use(cors());
+    app.use(express.json());
 
 // Routes
 app.use("/api/user", router);
