@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import User from "./userModel.js";
 const router = express.Router();
 router.post("/signup", async (req, res) => {
     const { username, email, password } = req.body;
