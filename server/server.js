@@ -4,7 +4,7 @@ import "dotenv/config";
 import connectDB from "./mongodb.js";
 import router from "./userRoutes.js";
 import twilio from "twilio";
-
+import contactrouter from "./contactRoutes.js";
 const app = express();
 
 // Connect to MongoDB
@@ -17,6 +17,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/user", router);
+app.use("/api/contact", contactrouter);
 
 
 const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
