@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CareCompanion - Elderly Care Made Simple</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+     <!-- Google OAuth & Assistant API -->
+     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="stylesheet" href="style.css">
     
 </head>
@@ -51,6 +53,7 @@
                         <span class="highlight">Smart</span>
                     </div>
                 </h1>
+                <button id="startAssistant">Start Voice Assistant</button>
                 <p class="hero-description">Experience the next generation of elderly care with our AI-powered platform. Providing peace of mind to seniors and their loved ones through innovative technology and compassionate service.</p>
                 
                 <div class="cta-group">
@@ -136,7 +139,7 @@
                 </svg>
                 <h3>Activities Tracking</h3>
                 <p>Monitor daily activities, exercise routines, and maintain an active lifestyle</p>
-                <a href="activities.html" class="feature-link">Learn More →</a>
+                <a href="activity.html" class="feature-link">Learn More →</a>
             </div>
             <div class="feature-card">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -413,7 +416,13 @@
         </div>
     </footer>
 
+    
+
     <script src="script.js"></script>
+
+    <script>
+        document.getElementById("startAssistant").addEventListener("click", authenticateWithGoogle);
+    </script>
 </body>
 
 
