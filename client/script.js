@@ -1,3 +1,5 @@
+const CLIENT_ID = "432869003314-dddj39mnhukdjlut0o1dheg8mh86ok91.apps.googleusercontent.com";  // Replace with your OAuth Client ID
+const API_SCOPE = "https://www.googleapis.com/auth/assistant-sdk-prototype";
 
 
 let screenReaderActive = false;
@@ -108,5 +110,23 @@ function sendSOS() {
     .then(response => response.json())
     .then(data => console.log("Response from server:", data))
     .catch(error => console.error("Error sending SOS:", error));
+}
+
+// Function to authenticate user with Google OAuth
+function authenticateWithGoogle() {
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: API_SCOPE,
+        callback: (response) => {
+            if (response.access_token) {
+                console.log("Authenticated successfully!", response);
+                startVoiceAssistant(); // Start voice assistant after authentication
+            } else {
+                console.error("Authentication failed", response);
+            }
+        }
+    });
+
+    tokenClient.requestAccessToken(); // Trigger OAuth request
 }
 
